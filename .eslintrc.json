@@ -43,7 +43,7 @@
     "no-console": "off",
     "no-useless-constructor": "off",
     "no-empty-function": "off",
-    "no-use-before-define": ["error", {"functions": false, "classes": false}],
+    "no-use-before-define": ["error", { "nofunc": true }],
     "lines-between-class-members": "off",
     "import/extensions": [
       "error",
