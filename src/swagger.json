@@ -1,0 +1,11 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Locar Documentation",
+    "description": "This is the Locar API Documentation",
+    "version": "1.0.0",
+    "contact": {
+      "email": "aronreis2@gmail.com"
+    }
+  }
+}
