@@ -1,0 +1,10 @@
+version: "3.7"
+
+services:
+  app:
+    build: .
+    container_name: "locar"
+    ports:
+      - 33333:33333
+    volumes:
+      - .:/usr/app
