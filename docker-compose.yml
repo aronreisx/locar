@@ -3,8 +3,13 @@ version: "3.7"
 services:
   app:
     build: .
-    container_name: "locar"
+    container_name: app_container
+    restart: always
     ports:
-      - 33333:33333
+      - ${SERVER_PORT}:${SERVER_PORT}
     volumes:
       - .:/usr/app
+    depends_on:
+      - database
+    network_mode: "host"
+
