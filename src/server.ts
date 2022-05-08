@@ -1,7 +1,7 @@
 import express from 'express';
 import swaggerUi from 'swagger-ui-express';
 
-import swaggerFile from './config/swagger.json';
+import { swaggerDoc } from './config/swagger';
 
 import { router } from './routes';
 
@@ -9,7 +9,7 @@ const app = express();
 
 app.use(express.json());
 
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerFile));
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDoc));
 
 app.use(router);
 
