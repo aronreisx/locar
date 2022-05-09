@@ -8,6 +8,8 @@ import { swaggerDoc } from './config/swagger';
 
 import { router } from './routes';
 
+import "./database";
+
 const app = express();
 
 app.use(express.json());

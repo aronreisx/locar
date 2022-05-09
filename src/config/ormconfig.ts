@@ -1,0 +1,22 @@
+import { BaseDataSourceOptions } from "typeorm/data-source/BaseDataSourceOptions";
+import { PostgresConnectionOptions } from "typeorm/driver/postgres/PostgresConnectionOptions";
+
+const {
+  DB_TYPE,
+  DB_HOST,
+  DB_PORT,
+  DB_USER,
+  DB_PASS,
+  DB_NAME
+} = process.env;
+
+const ormconfig: BaseDataSourceOptions = {
+  type: DB_TYPE,
+  host: DB_HOST,
+  port: Number(DB_PORT),
+  username: DB_USER,
+  password: DB_PASS,
+  database: DB_NAME,
+} as BaseDataSourceOptions;
+
+export default ormconfig;
