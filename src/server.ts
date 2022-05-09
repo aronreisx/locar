@@ -1,3 +1,6 @@
+import dotenv from 'dotenv'
+dotenv.config()
+
 import express from 'express';
 import swaggerUi from 'swagger-ui-express';
 
@@ -13,8 +16,8 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDoc));
 
 app.use(router);
 
-const port = 3333;
+const { SERVER_PORT } = process.env;
 
-app.listen(port, () => {
-  console.log(`Server running on http://localhost:${port}`);
+app.listen(SERVER_PORT, () => {
+  console.log(`Server running on http://localhost:${SERVER_PORT}`);
 });
