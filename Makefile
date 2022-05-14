@@ -9,7 +9,7 @@ run:
 	-e POSTGRES_PASSWORD=${DB_PASS} \
 	-e POSTGRES_DB=${DB_NAME} \
 	--name ${DB_CONTAINER} \
-	${DB_IMAGE}:${DB_VERSION}
+	${DB_TYPE}:${DB_VERSION}
 
 .PHONY: start
 start:
