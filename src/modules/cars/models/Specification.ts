@@ -1,15 +1,16 @@
-import { v4 as uuidV4 } from 'uuid';
+import { v4 as uuidv4 } from 'uuid';
 
 class Specification {
   id?: string;
   name: string;
   description: string;
-  created_at: Date;
+  created_at?: Date;
 
-  constructor() {
-    if (!this.id) {
-      this.id = uuidV4();
-    }
+  constructor(name: string, description: string) {
+    this.id ??= uuidv4();
+    this.created_at ??= new Date();
+    this.name = name;
+    this.description = description;
   }
 }
 

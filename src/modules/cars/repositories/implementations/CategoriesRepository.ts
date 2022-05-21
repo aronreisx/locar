@@ -21,13 +21,10 @@ class CategoriesRepository implements ICategoryRepository {
   }
 
   create({ name, description }: ICreateCategoryDTO): void {
-    const category = new Category();
-
-    Object.assign(category, {
+    const category = new Category(
       name,
       description,
-      created_at: new Date(),
-    });
+    );
 
     this.categories.push(category);
   }
@@ -36,7 +33,7 @@ class CategoriesRepository implements ICategoryRepository {
     return this.categories;
   }
 
-  findByName(name: string): Category {
+  findByName(name: string): Category | undefined {
     const category = this.categories.find((category) => {
       return category.name === name;
     });
