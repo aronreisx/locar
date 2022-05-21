@@ -1,5 +1,6 @@
 import dotenv from 'dotenv'
-dotenv.config()
+import dotenvExpander from 'dotenv-expand';
+dotenvExpander.expand(dotenv.config());
 
 import express from 'express';
 import swaggerUi from 'swagger-ui-express';
