@@ -4,14 +4,11 @@ import {
   ICreateCategoryDTO,
 } from '../ICategoriesRepository';
 
+import { prismaClient } from '../../../../database/prismaClient';
+
 class CategoriesRepository implements ICategoryRepository {
-  private categories: Category[];
-
+  private repository = prismaClient.category;
   private static INSTANCE: CategoriesRepository;
-
-  private constructor() {
-    this.categories = [];
-  }
 
   public static getInstance(): CategoriesRepository {
     if (!CategoriesRepository.INSTANCE) {
@@ -20,24 +17,24 @@ class CategoriesRepository implements ICategoryRepository {
     return CategoriesRepository.INSTANCE;
   }
 
-  create({ name, description }: ICreateCategoryDTO): void {
-    const category = new Category(
-      name,
-      description,
-    );
-
-    this.categories.push(category);
+  async create({ name, description }: ICreateCategoryDTO): Promise<void> {
+    await this.repository.create({
+      data: {
+        name,
+        description,
+      }
+    })
   }
 
-  list(): Category[] {
-    return this.categories;
+  async list(): Promise<Category[]> {
+    const categories = await this.repository.findMany();
+    return categories;
   }
 
-  findByName(name: string): Category | undefined {
-    const category = this.categories.find((category) => {
-      return category.name === name;
+  async findByName(name: string): Promise<Category | null> {
+    const category = await this.repository.findFirst({
+      where: { name }
     });
-
     return category;
   }
 }
