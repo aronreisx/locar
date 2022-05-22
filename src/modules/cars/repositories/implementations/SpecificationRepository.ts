@@ -4,27 +4,24 @@ import {
   ICreateSpecificationsDTO,
 } from '../ISpecificationsRepository';
 
+import { prismaClient } from '../../../../database/prismaClient';
+
 class SpecificationsRepository implements ISpecificationRepository {
-  private specifications: Specification[];
+  private repository = prismaClient.specification;
 
-  constructor() {
-    this.specifications = [];
+  async create({ name, description }: ICreateSpecificationsDTO): Promise<void> {
+    await this.repository.create({
+      data: {
+        name,
+        description,
+      }
+    })
   }
 
-  create({ name, description }: ICreateSpecificationsDTO): void {
-    const specification = new Specification(
-      name,
-      description,
-    );
-
-    this.specifications.push(specification);
-  }
-
-  findByName(name: string): Specification | undefined {
-    const specification = this.specifications.find(
-      (specification) => specification.name === name
-    );
-
+  async findByName(name: string): Promise<Specification | null> {
+    const specification = await this.repository.findFirst({
+      where: { name }
+    });
     return specification;
   }
 }
