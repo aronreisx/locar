@@ -8,14 +8,6 @@ import { prismaClient } from '../../../../database/prismaClient';
 
 class SpecificationsRepository implements ISpecificationRepository {
   private repository = prismaClient.specification;
-  private static INSTANCE: SpecificationsRepository;
-
-  public static getInstance(): SpecificationsRepository {
-    if (!SpecificationsRepository.INSTANCE) {
-      SpecificationsRepository.INSTANCE = new SpecificationsRepository();
-    }
-    return SpecificationsRepository.INSTANCE;
-  }
 
   async create({ name, description }: ICreateSpecificationsDTO): Promise<void> {
     await this.repository.create({

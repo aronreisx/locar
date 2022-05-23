@@ -8,14 +8,6 @@ import { prismaClient } from '../../../../database/prismaClient';
 
 class CategoriesRepository implements ICategoryRepository {
   private repository = prismaClient.category;
-  private static INSTANCE: CategoriesRepository;
-
-  public static getInstance(): CategoriesRepository {
-    if (!CategoriesRepository.INSTANCE) {
-      CategoriesRepository.INSTANCE = new CategoriesRepository();
-    }
-    return CategoriesRepository.INSTANCE;
-  }
 
   async create({ name, description }: ICreateCategoryDTO): Promise<void> {
     await this.repository.create({
