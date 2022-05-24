@@ -2,6 +2,9 @@ import dotenv from 'dotenv'
 import dotenvExpander from 'dotenv-expand';
 dotenvExpander.expand(dotenv.config());
 
+import 'reflect-metadata';
+import './shared/container';
+
 import express from 'express';
 import swaggerUi from 'swagger-ui-express';
 
