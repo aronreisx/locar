@@ -69,6 +69,70 @@ export const swaggerDoc = JSON.parse(
           },
         },
       },
+      '/categories/import': {
+        post: {
+          tags: ['categories'],
+          summary: 'Import categories',
+          description: 'Import categories from a file',
+          requestBody: {
+            content: {
+              'multipart/form-data': {
+                schema: {
+                  type: 'object',
+                  properties: {
+                    file: {
+                      type: 'string',
+                      format: 'binary'
+                    }
+                  }
+                }
+              }
+            }
+          },
+          responses: {
+            '201': {
+              description: 'Created'
+            }
+          }
+        }
+      },
+      '/specifications': {
+        post: {
+          tags: ['Specifications'],
+          summary: 'Create a specification',
+          description: 'Create a new specification',
+          requestBody: {
+            content: {
+              'application/json': {
+                schema: {
+                  '$ref': '#/definitions/Specification'
+                }
+              }
+            }
+          },
+          responses: {
+            '201': {
+              description: 'Created'
+            },
+            '500': {
+              description: 'Specification already exists'
+            }
+          }
+        }
+      }
     },
+    definitions: {
+      Specifications: {
+        type: 'object',
+        properties: {
+          name: {
+            type: 'string'
+          },
+          description: {
+            type: 'string'
+          }
+        }
+      }
+    }
   })
 );
