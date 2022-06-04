@@ -16,8 +16,25 @@ export class CreateUserUseCase {
     private usersRepository: IUsersRepository
   ) {}
 
-  async execute(data: ICreateUserDTO): Promise<void> {
-    data.password = await argon2.hash(data.password);
-    await this.usersRepository.create(data);
+  async execute({
+    name,
+    email,
+    password,
+    driver_license
+  }: ICreateUserDTO): Promise<void> {
+    const userAlreadyExists = await this.usersRepository.findByEmail(email);
+
+    if (userAlreadyExists) {
+      throw new Error('User already exists');
+    }
+
+    const hashedPassword = await argon2.hash(password);
+
+    await this.usersRepository.create({
+      name,
+      email,
+      password: hashedPassword,
+      driver_license
+    });
   }
 }
