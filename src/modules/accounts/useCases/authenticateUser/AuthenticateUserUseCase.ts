@@ -2,6 +2,8 @@ import { inject, injectable } from 'tsyringe';
 import { verify } from 'argon2';
 import { sign } from 'jsonwebtoken';
 
+import { AppError } from '../../../../errors/AppErrors';
+
 import { IUsersRepository } from '../../repositories/IUsersRepository';
 
 interface IRequest {
@@ -28,13 +30,13 @@ export class AuthenticateUserUseCase {
     const user = await this.usersRepository.findByEmail(email);
 
     if (!user) {
-      throw new Error('Email or password invalid');
+      throw new AppError('Email or password invalid', 401);
     }
 
     const isPasswordValid = await verify(user.password, password);
 
     if (!isPasswordValid) {
-      throw new Error('Email or password invalid');
+      throw new AppError('Email or password invalid', 401);
     }
 
     const token = sign(

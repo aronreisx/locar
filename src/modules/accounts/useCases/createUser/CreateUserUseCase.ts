@@ -1,6 +1,8 @@
 import { inject, injectable } from 'tsyringe';
 import * as argon2 from 'argon2';
 
+import { AppError } from '../../../../errors/AppErrors';
+
 import { IUsersRepository } from '../../repositories/IUsersRepository';
 import { ICreateUserDTO } from '../../dtos/ICreateUserDTO';
 
@@ -25,7 +27,7 @@ export class CreateUserUseCase {
     const userAlreadyExists = await this.usersRepository.findByEmail(email);
 
     if (userAlreadyExists) {
-      throw new Error('User already exists');
+      throw new AppError('User already exists', 400);
     }
 
     const hashedPassword = await argon2.hash(password);
