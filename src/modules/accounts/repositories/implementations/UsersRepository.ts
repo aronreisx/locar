@@ -16,4 +16,11 @@ export class UsersRepository implements IUsersRepository {
     });
     return user;
   }
+
+  async findById(id: string): Promise<User | null> {
+    const user = await this.repository.findUnique({
+      where: { id },
+    });
+    return user;
+  }
 }
