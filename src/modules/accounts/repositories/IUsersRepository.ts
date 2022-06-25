@@ -1,4 +1,4 @@
-import { User } from '@prisma/client';
+import { User } from '../models/User';
 import { ICreateUserDTO } from '../dtos/ICreateUserDTO';
 
 export interface IUsersRepository {

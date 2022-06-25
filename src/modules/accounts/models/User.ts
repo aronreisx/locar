@@ -4,6 +4,7 @@ export interface User {
   email: string;
   password: string;
   driver_license: string;
+  avatar?: string;
   admin: boolean;
   created_at: Date;
 }
