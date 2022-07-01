@@ -3,16 +3,16 @@ import dotenvExpander from 'dotenv-expand';
 dotenvExpander.expand(dotenv.config());
 
 import 'reflect-metadata';
-import './shared/container';
+import '@shared/container';
 
 import express from 'express';
 import 'express-async-errors';
 import swaggerUi from 'swagger-ui-express';
 
-import { swaggerDoc } from './config/swagger';
+import { swaggerDoc } from '@config/swagger';
 
 import { router } from './routes';
-import { errorHandler } from './middlewares/errorHandler';
+import { errorHandler } from '@middlewares/errorHandler';
 
 const app = express();
 

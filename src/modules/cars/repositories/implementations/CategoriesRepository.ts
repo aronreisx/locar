@@ -1,10 +1,10 @@
-import { Category } from '../../models/Category';
+import { Category } from '@modules/cars/models/Category';
 import {
   ICategoryRepository,
   ICreateCategoryDTO,
 } from '../ICategoriesRepository';
 
-import { prismaClient } from '../../../../database/prismaClient';
+import { prismaClient } from '@database/prismaClient';
 
 class CategoriesRepository implements ICategoryRepository {
   private repository = prismaClient.category;
