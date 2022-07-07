@@ -2,9 +2,9 @@ import { Specification } from '@modules/cars/models/Specification';
 import {
   ISpecificationRepository,
   ICreateSpecificationsDTO,
-} from '../ISpecificationsRepository';
+} from '../../../repositories/ISpecificationsRepository';
 
-import { prismaClient } from '@database/prismaClient';
+import { prismaClient } from '@shared/infra/http/prisma/prismaClient';
 
 class SpecificationsRepository implements ISpecificationRepository {
   private repository = prismaClient.specification;

@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
-import { ICreateUserDTO } from "@modules/accounts/dtos/ICreateUserDTO";
+import { ICreateUserDTO } from "@modules/accounts/dto/ICreateUserDTO";
 import { User } from '@modules/accounts/models/User';
 import { IUsersRepository } from "../IUsersRepository";
 

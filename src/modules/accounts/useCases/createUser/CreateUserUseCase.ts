@@ -4,7 +4,7 @@ import * as argon2 from 'argon2';
 import { AppError } from '@errors/AppErrors';
 
 import { IUsersRepository } from '@modules/accounts/repositories/IUsersRepository';
-import { ICreateUserDTO } from '@modules/accounts/dtos/ICreateUserDTO';
+import { ICreateUserDTO } from '@modules/accounts/dto/ICreateUserDTO';
 
 interface IRequest {
   name: string;

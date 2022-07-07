@@ -1,7 +1,7 @@
 import { User } from '@modules/accounts/models/User';
-import { prismaClient } from '@database/prismaClient';
-import { ICreateUserDTO } from '@modules/accounts/dtos/ICreateUserDTO';
-import { IUsersRepository } from '../IUsersRepository';
+import { prismaClient } from '@shared/infra/http/prisma/prismaClient';
+import { ICreateUserDTO } from '@modules/accounts/dto/ICreateUserDTO';
+import { IUsersRepository } from '../../../repositories/IUsersRepository';
 
 export class UsersRepository implements IUsersRepository {
   private repository = prismaClient.user;

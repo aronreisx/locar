@@ -3,7 +3,7 @@ import { verify } from "jsonwebtoken";
 
 import { AppError } from "@errors/AppErrors";
 
-import { UsersRepository } from "@modules/accounts/repositories/implementations/UsersRepository";
+import { UsersRepository } from "@modules/accounts/infra/prisma/repositories/UsersRepository";
 
 interface IPayload {
   iat: number;

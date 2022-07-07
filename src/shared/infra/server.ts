@@ -11,8 +11,8 @@ import swaggerUi from 'swagger-ui-express';
 
 import { swaggerDoc } from '@config/swagger';
 
-import { router } from './routes';
-import { errorHandler } from '@middlewares/errorHandler';
+import { router } from '@shared/infra/http/routes';
+import { errorHandler } from '@shared/infra/http/middlewares/errorHandler';
 
 const app = express();
 
