@@ -20,13 +20,7 @@
       ],
       "@utils/*": [
         "utils/*"
-      ],
-      "@database/*": [
-        "database/*"
-      ],
-      "@middlewares/*": [
-        "middlewares/*"
-      ],
+      ]
     },
     "resolveJsonModule": true,
     "sourceMap": true,
