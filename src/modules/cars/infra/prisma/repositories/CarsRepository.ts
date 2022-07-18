@@ -37,4 +37,18 @@ export class CarsRepository implements ICarsRepository {
     return car;
   }
 
+  async listAvailable(
+    category_id?: string,
+    brand?: string,
+    name?: string
+  ): Promise<Car[]> {
+    const availableCars = await this.repository.findMany({
+      where: {
+        available: true,
+        AND: [{ category_id }, { brand }, { name }],
+      },
+    });
+
+    return availableCars;
+  }
 }
