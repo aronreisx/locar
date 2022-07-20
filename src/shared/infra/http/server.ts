@@ -1,6 +1,5 @@
-import dotenv from 'dotenv'
+import dotenv from 'dotenv';
 import dotenvExpander from 'dotenv-expand';
-dotenvExpander.expand(dotenv.config());
 
 import 'reflect-metadata';
 import '@shared/container';
@@ -10,9 +9,10 @@ import 'express-async-errors';
 import swaggerUi from 'swagger-ui-express';
 
 import { swaggerDoc } from '@config/swagger';
-
-import { router } from '@shared/infra/http/routes';
 import { errorHandler } from '@shared/infra/http/middlewares/errorHandler';
+import { router } from '@shared/infra/http/routes';
+
+dotenvExpander.expand(dotenv.config());
 
 const app = express();
 

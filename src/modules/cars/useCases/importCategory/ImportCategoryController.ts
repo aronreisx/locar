@@ -3,12 +3,12 @@ import { container } from 'tsyringe';
 
 import { ImportCategoryUseCase } from './ImportCategoryUseCase';
 
-class ImportCategoryController {
+export class ImportCategoryController {
   async handle(resquest: Request, response: Response) {
     const { file } = resquest;
 
     if (!file) {
-      return response.status(400).json({ message: 'File not found' })
+      return response.status(400).json({ message: 'File not found' });
     }
 
     const importCategoryUseCase = container.resolve(ImportCategoryUseCase);
@@ -17,5 +17,3 @@ class ImportCategoryController {
     return response.status(201).send();
   }
 }
-
-export { ImportCategoryController };

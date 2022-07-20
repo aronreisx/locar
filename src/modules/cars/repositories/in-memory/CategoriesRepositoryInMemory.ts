@@ -5,32 +5,30 @@ import { Category } from '@modules/cars/models/Category';
 
 import {
   ICategoryRepository,
-  ICreateCategoryDTO
+  ICreateCategoryDTO,
 } from '../ICategoriesRepository';
 
 export class CategoriesRepositoryInMemory implements ICategoryRepository {
   repository: Category[] = [];
 
   async create({ name, description }: ICreateCategoryDTO): Promise<void> {
-    this.repository.push(
-      {
-        id: uuidv4(),
-        name,
-        description,
-        created_at: new Date()
-      }
-    )
-  };
+    this.repository.push({
+      id: uuidv4(),
+      name,
+      description,
+      created_at: new Date(),
+    });
+  }
 
-    async list(): Promise<Category[]> {
-      return this.repository;
-    };
+  async list(): Promise<Category[]> {
+    return this.repository;
+  }
 
   async findByName(name: string): Promise<Category | null> {
     const category = this.repository.find((category) => {
-      category.name === name
+      category.name === name;
     });
-    if(!category) throw new AppError('Category doesn\'t exists', 400);
+    if (!category) throw new AppError("Category doesn't exists", 400);
     return category;
-  };
+  }
 }

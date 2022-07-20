@@ -1,8 +1,9 @@
-import { AppError } from  "@errors/AppErrors";
-import { ICreateUserDTO } from "@modules/accounts/dto/ICreateUserDTO";
-import { UsersRepositoryInMemory } from "@modules/accounts/repositories/in-memory/UsersRepositoryInMemory";
-import { CreateUserUseCase } from "../createUser/CreateUserUseCase";
-import { AuthenticateUserUseCase } from "./AuthenticateUserUseCase";
+import { AppError } from '@errors/AppErrors';
+import { ICreateUserDTO } from '@modules/accounts/dto/ICreateUserDTO';
+import { UsersRepositoryInMemory } from '@modules/accounts/repositories/in-memory/UsersRepositoryInMemory';
+
+import { CreateUserUseCase } from '../createUser/CreateUserUseCase';
+import { AuthenticateUserUseCase } from './AuthenticateUserUseCase';
 
 let authenticateUserUseCase: AuthenticateUserUseCase;
 let usersRepositoryInMemory: UsersRepositoryInMemory;
@@ -22,14 +23,14 @@ describe('Authenticate user', () => {
       driver_license: '12412',
       email: 'user@test.com',
       password: '4444',
-      name: 'Test pass'
+      name: 'Test pass',
     };
 
     await createUserUseCase.execute(user);
 
     const result = await authenticateUserUseCase.execute({
       email: user.email,
-      password: user.password
+      password: user.password,
     });
 
     expect(result).toHaveProperty('token');
@@ -39,7 +40,7 @@ describe('Authenticate user', () => {
     expect(async () => {
       await authenticateUserUseCase.execute({
         email: 'unexistant@email.com',
-        password: 'unexistantpassword'
+        password: 'unexistantpassword',
       });
     }).rejects.toBeInstanceOf(AppError);
   });
@@ -50,14 +51,14 @@ describe('Authenticate user', () => {
         driver_license: '12314',
         email: 'user@test.com',
         password: '12341',
-        name: 'Test pass'
-      }
+        name: 'Test pass',
+      };
 
-      await createUserUseCase.execute(user)
+      await createUserUseCase.execute(user);
 
       await authenticateUserUseCase.execute({
         email: user.email,
-        password: 'wrongpassword'
+        password: 'wrongpassword',
       });
     }).rejects.toBeInstanceOf(AppError);
   });

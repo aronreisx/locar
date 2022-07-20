@@ -1,9 +1,8 @@
-import { NextFunction, Request, Response } from "express";
-import { verify } from "jsonwebtoken";
+import { NextFunction, Request, Response } from 'express';
+import { verify } from 'jsonwebtoken';
 
-import { AppError } from "@errors/AppErrors";
-
-import { UsersRepository } from "@modules/accounts/infra/prisma/repositories/UsersRepository";
+import { AppError } from '@errors/AppErrors';
+import { UsersRepository } from '@modules/accounts/infra/prisma/repositories/UsersRepository';
 
 interface IPayload {
   iat: number;
@@ -19,10 +18,10 @@ export async function ensureAuthentication(
   const authHeader = request.headers.authorization;
 
   if (!authHeader) {
-    throw new AppError("Token is missing", 401);
+    throw new AppError('Token is missing', 401);
   }
 
-  const [, token] = authHeader.split(" ");
+  const [, token] = authHeader.split(' ');
 
   try {
     const { sub: userId } = verify(
@@ -34,15 +33,15 @@ export async function ensureAuthentication(
     const user = await usersRepository.findById(userId);
 
     if (!user) {
-      throw new AppError("User does not exists", 401);
+      throw new AppError('User does not exists', 401);
     }
 
     request.user = {
-      id: userId
+      id: userId,
     };
 
     next();
   } catch {
-    throw new AppError("Invalid token", 401);
+    throw new AppError('Invalid token', 401);
   }
 }

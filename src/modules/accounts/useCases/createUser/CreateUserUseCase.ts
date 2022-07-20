@@ -1,10 +1,9 @@
-import { inject, injectable } from 'tsyringe';
 import * as argon2 from 'argon2';
+import { inject, injectable } from 'tsyringe';
 
 import { AppError } from '@errors/AppErrors';
-
-import { IUsersRepository } from '@modules/accounts/repositories/IUsersRepository';
 import { ICreateUserDTO } from '@modules/accounts/dto/ICreateUserDTO';
+import { IUsersRepository } from '@modules/accounts/repositories/IUsersRepository';
 
 interface IRequest {
   name: string;
@@ -22,7 +21,7 @@ export class CreateUserUseCase {
     name,
     email,
     password,
-    driver_license
+    driver_license,
   }: ICreateUserDTO): Promise<void> {
     const userAlreadyExists = await this.usersRepository.findByEmail(email);
 
@@ -36,7 +35,7 @@ export class CreateUserUseCase {
       name,
       email,
       password: hashedPassword,
-      driver_license
+      driver_license,
     });
   }
 }

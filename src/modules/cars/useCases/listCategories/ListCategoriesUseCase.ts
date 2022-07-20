@@ -1,9 +1,10 @@
 import { inject, injectable } from 'tsyringe';
+
 import { Category } from '@modules/cars/models/Category';
 import { ICategoryRepository } from '@modules/cars/repositories/ICategoriesRepository';
 
 @injectable()
-class ListCategoriesUseCase {
+export class ListCategoriesUseCase {
   constructor(
     @inject('CategoriesRepository')
     private categoriesRepository: ICategoryRepository
@@ -15,5 +16,3 @@ class ListCategoriesUseCase {
     return categories;
   }
 }
-
-export { ListCategoriesUseCase };

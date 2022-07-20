@@ -1,12 +1,12 @@
 import { Category } from '@modules/cars/models/Category';
+import { prismaClient } from '@shared/infra/http/prisma/prismaClient';
+
 import {
   ICategoryRepository,
   ICreateCategoryDTO,
 } from '../../../repositories/ICategoriesRepository';
 
-import { prismaClient } from '@shared/infra/http/prisma/prismaClient';
-
-class CategoriesRepository implements ICategoryRepository {
+export class CategoriesRepository implements ICategoryRepository {
   private repository = prismaClient.category;
 
   async create({ name, description }: ICreateCategoryDTO): Promise<void> {
@@ -14,8 +14,8 @@ class CategoriesRepository implements ICategoryRepository {
       data: {
         name,
         description,
-      }
-    })
+      },
+    });
   }
 
   async list(): Promise<Category[]> {
@@ -25,10 +25,8 @@ class CategoriesRepository implements ICategoryRepository {
 
   async findByName(name: string): Promise<Category | null> {
     const category = await this.repository.findFirst({
-      where: { name }
+      where: { name },
     });
     return category;
   }
 }
-
-export { CategoriesRepository };

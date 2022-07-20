@@ -82,19 +82,19 @@ export const swaggerDoc = JSON.parse(
                   properties: {
                     file: {
                       type: 'string',
-                      format: 'binary'
-                    }
-                  }
-                }
-              }
-            }
+                      format: 'binary',
+                    },
+                  },
+                },
+              },
+            },
           },
           responses: {
             '201': {
-              description: 'Created'
-            }
-          }
-        }
+              description: 'Created',
+            },
+          },
+        },
       },
       '/specifications': {
         post: {
@@ -105,34 +105,34 @@ export const swaggerDoc = JSON.parse(
             content: {
               'application/json': {
                 schema: {
-                  '$ref': '#/definitions/Specification'
-                }
-              }
-            }
+                  $ref: '#/definitions/Specification',
+                },
+              },
+            },
           },
           responses: {
             '201': {
-              description: 'Created'
+              description: 'Created',
             },
             '500': {
-              description: 'Specification already exists'
-            }
-          }
-        }
-      }
+              description: 'Specification already exists',
+            },
+          },
+        },
+      },
     },
     definitions: {
       Specifications: {
         type: 'object',
         properties: {
           name: {
-            type: 'string'
+            type: 'string',
           },
           description: {
-            type: 'string'
-          }
-        }
-      }
-    }
+            type: 'string',
+          },
+        },
+      },
+    },
   })
 );

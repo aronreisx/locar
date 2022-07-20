@@ -1,9 +1,8 @@
-import { inject, injectable } from 'tsyringe';
 import { verify } from 'argon2';
 import { sign } from 'jsonwebtoken';
+import { inject, injectable } from 'tsyringe';
 
 import { AppError } from '@errors/AppErrors';
-
 import { IUsersRepository } from '@modules/accounts/repositories/IUsersRepository';
 
 interface IRequest {
@@ -15,7 +14,7 @@ interface IResponse {
   user: {
     name: string;
     email: string;
-  },
+  };
   token: string;
 }
 
@@ -54,6 +53,6 @@ export class AuthenticateUserUseCase {
         email: user.email,
       },
       token,
-    }
+    };
   }
 }
