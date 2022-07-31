@@ -18,10 +18,11 @@ model Category {
 }
 
 model Specification {
-  id          String   @id @default(uuid())
+  id          String               @id @default(uuid())
   name        String
   description String
-  created_at  DateTime @default(now())
+  created_at  DateTime             @default(now())
+  cars        SpecificationsCars[]
 
   @@map("specifications")
 }
@@ -40,17 +41,29 @@ model User {
 }
 
 model Car {
-  id            String    @id @default(uuid())
-  name          String
-  description   String
-  daily_rate    Int
-  available     Boolean   @default(true)
-  license_plate String
-  fine_amount   Int
-  brand         String
-  category_id   String
-  created_at    DateTime  @default(now())
-  category      Category? @relation(fields: [category_id], references: [id], onDelete: SetNull, onUpdate: SetNull)
+  id             String               @id @default(uuid())
+  name           String
+  description    String
+  daily_rate     Int
+  available      Boolean              @default(true)
+  license_plate  String
+  fine_amount    Int
+  brand          String
+  category_id    String
+  created_at     DateTime             @default(now())
+  category       Category?            @relation(fields: [category_id], references: [id], onDelete: SetNull, onUpdate: SetNull)
+  specifications SpecificationsCars[]
 
   @@map("cars")
+}
+
+model SpecificationsCars {
+  id               String         @id @default(uuid())
+  specification_id String
+  car_id           String
+  created_at       DateTime       @default(now())
+  specification    Specification? @relation(fields: [specification_id], references: [id], onDelete: SetNull, onUpdate: SetNull)
+  car              Car?           @relation(fields: [car_id], references: [id], onDelete: SetNull, onUpdate: SetNull)
+
+  @@map("specifications_cars")
 }
