@@ -38,3 +38,11 @@ wipe-all:
 .PHONY: remove-modules
 remove-modules:
 	rm -rf node_modules
+
+.PHONY: up
+up:
+	docker-compose up -d
+
+.PHONY: down
+down:
+	docker-compose down
