@@ -1,5 +1,5 @@
 import { ICreateCarDTO } from '@modules/cars/dto/ICreateCarDTO';
-import { Car } from '@modules/cars/models/Car';
+import { ICar } from '@modules/cars/models/Car';
 import { ICarsRepository } from '@modules/cars/repositories/ICarsRepository';
 import { prismaClient } from '@shared/infra/http/prisma/prismaClient';
 
@@ -14,7 +14,7 @@ export class CarsRepository implements ICarsRepository {
     fine_amount,
     brand,
     category_id,
-  }: ICreateCarDTO): Promise<Car> {
+  }: ICreateCarDTO): Promise<ICar> {
     const car = await this.repository.create({
       data: {
         name,
@@ -30,7 +30,7 @@ export class CarsRepository implements ICarsRepository {
     return car;
   }
 
-  async findByLicensePlate(license_plate: string): Promise<Car | null> {
+  async findByLicensePlate(license_plate: string): Promise<ICar | null> {
     const car = await this.repository.findFirst({
       where: { license_plate },
     });
@@ -41,7 +41,7 @@ export class CarsRepository implements ICarsRepository {
     category_id?: string,
     brand?: string,
     name?: string
-  ): Promise<Car[]> {
+  ): Promise<ICar[]> {
     const availableCars = await this.repository.findMany({
       where: {
         available: true,

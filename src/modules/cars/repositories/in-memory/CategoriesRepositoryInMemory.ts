@@ -1,7 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
 
-import { AppError } from '@errors/AppErrors';
-import { Category } from '@modules/cars/models/Category';
+import { ICategory } from '@modules/cars/models/Category';
 
 import {
   ICategoryRepository,
@@ -9,7 +8,7 @@ import {
 } from '../ICategoriesRepository';
 
 export class CategoriesRepositoryInMemory implements ICategoryRepository {
-  repository: Category[] = [];
+  repository: ICategory[] = [];
 
   async create({ name, description }: ICreateCategoryDTO): Promise<void> {
     this.repository.push({
@@ -20,11 +19,11 @@ export class CategoriesRepositoryInMemory implements ICategoryRepository {
     });
   }
 
-  async list(): Promise<Category[]> {
+  async list(): Promise<ICategory[]> {
     return this.repository;
   }
 
-  async findByName(name: string): Promise<Category | null> {
+  async findByName(name: string): Promise<ICategory | null> {
     const category = this.repository.find((category) => {
       category.name === name;
     });

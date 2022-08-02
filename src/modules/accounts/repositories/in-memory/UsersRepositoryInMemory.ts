@@ -1,12 +1,12 @@
 import { v4 as uuidv4 } from 'uuid';
 
 import { ICreateUserDTO } from '@modules/accounts/dto/ICreateUserDTO';
-import { User } from '@modules/accounts/models/User';
+import { IUser } from '@modules/accounts/models/User';
 
 import { IUsersRepository } from '../IUsersRepository';
 
 export class UsersRepositoryInMemory implements IUsersRepository {
-  repository: User[] = [];
+  repository: IUser[] = [];
 
   async create({
     driver_license,
@@ -27,19 +27,21 @@ export class UsersRepositoryInMemory implements IUsersRepository {
     this.repository.push(user);
   }
 
-  async findByEmail(email: string): Promise<User | undefined> {
+  async findByEmail(email: string): Promise<IUser | null> {
     const user = this.repository.find((user) => {
-      user.email === email;
+      return user.email === email;
     });
 
+    if (!user) return null;
     return user;
   }
 
-  async findById(id: string): Promise<User | undefined> {
+  async findById(id: string): Promise<IUser | null> {
     const user = this.repository.find((user) => {
-      user.id === id;
+      return user.id === id;
     });
 
+    if (!user) return null;
     return user;
   }
 }

@@ -1,5 +1,5 @@
 import { ICreateUserDTO } from '@modules/accounts/dto/ICreateUserDTO';
-import { User } from '@modules/accounts/models/User';
+import { IUser } from '@modules/accounts/models/User';
 import { prismaClient } from '@shared/infra/http/prisma/prismaClient';
 
 import { IUsersRepository } from '../../../repositories/IUsersRepository';
@@ -11,14 +11,14 @@ export class UsersRepository implements IUsersRepository {
     await this.repository.create({ data });
   }
 
-  async findByEmail(email: string): Promise<User | null> {
+  async findByEmail(email: string): Promise<IUser | null> {
     const user = await this.repository.findFirst({
       where: { email },
     });
     return user;
   }
 
-  async findById(id: string): Promise<User | null> {
+  async findById(id: string): Promise<IUser | null> {
     const user = await this.repository.findUnique({
       where: { id },
     });

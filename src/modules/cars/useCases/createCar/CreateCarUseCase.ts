@@ -1,7 +1,7 @@
 import { inject, injectable } from 'tsyringe';
 
 import { AppError } from '@errors/AppErrors';
-import { Car } from '@modules/cars/models/Car';
+import { ICar } from '@modules/cars/models/Car';
 import { ICarsRepository } from '@modules/cars/repositories/ICarsRepository';
 
 interface IRequest {
@@ -20,7 +20,7 @@ export class CreateCarUseCase {
     @inject('CarsRepository')
     private carsRepository: ICarsRepository
   ) {}
-  async execute(data: IRequest): Promise<Car> {
+  async execute(data: IRequest): Promise<ICar> {
     const carAlreadyExists = await this.carsRepository.findByLicensePlate(
       data.license_plate
     );

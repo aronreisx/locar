@@ -1,6 +1,4 @@
-import { Specification } from '@modules/cars/models/Specification';
-import { prismaClient } from '@shared/infra/http/prisma/prismaClient';
-
+import { ISpecification } from '@modules/cars/models/Specification';
 import {
   ISpecificationRepository,
   ICreateSpecificationsDTO,
@@ -18,7 +16,7 @@ export class SpecificationsRepository implements ISpecificationRepository {
     });
   }
 
-  async findByName(name: string): Promise<Specification | null> {
+  async findByName(name: string): Promise<ISpecification | null> {
     const specification = await this.repository.findFirst({
       where: { name },
     });

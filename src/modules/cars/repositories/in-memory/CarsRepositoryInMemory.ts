@@ -1,12 +1,12 @@
 import { v4 as uuidv4 } from 'uuid';
 
-import { Car } from '@modules/cars/models/Car';
+import { ICar } from '@modules/cars/models/Car';
 
 import { ICreateCarDTO } from '../../dto/ICreateCarDTO';
 import { ICarsRepository } from '../ICarsRepository';
 
 export class CarsRepositoryInMemory implements ICarsRepository {
-  repository: Car[] = [];
+  cars: ICar[] = [];
 
   async create({
     name,
@@ -16,8 +16,8 @@ export class CarsRepositoryInMemory implements ICarsRepository {
     fine_amount,
     brand,
     category_id,
-  }: ICreateCarDTO): Promise<Car> {
-    const car: Car = {
+  }: ICreateCarDTO): Promise<ICar> {
+    const car: ICar = {
       id: uuidv4(),
       name,
       description,
@@ -34,10 +34,7 @@ export class CarsRepositoryInMemory implements ICarsRepository {
     return car;
   }
 
-  async findByLicensePlate(license_plate: string): Promise<Car | null> {
-    const car = this.repository.find(
-      (car) => car.license_plate === license_plate
-    );
+  async findByLicensePlate(license_plate: string): Promise<ICar | null> {
 
     if (!car) return null;
     return car;
@@ -47,7 +44,7 @@ export class CarsRepositoryInMemory implements ICarsRepository {
     category_id?: string,
     brand?: string,
     name?: string
-  ): Promise<Car[]> {
+  ): Promise<ICar[]> {
     const availableCars = this.repository.filter((car) => {
       if (
         car.available === true ||

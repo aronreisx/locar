@@ -1,4 +1,4 @@
-import { Category } from '@modules/cars/models/Category';
+import { ICategory } from '@modules/cars/models/Category';
 import { prismaClient } from '@shared/infra/http/prisma/prismaClient';
 
 import {
@@ -18,12 +18,12 @@ export class CategoriesRepository implements ICategoryRepository {
     });
   }
 
-  async list(): Promise<Category[]> {
+  async list(): Promise<ICategory[]> {
     const categories = await this.repository.findMany();
     return categories;
   }
 
-  async findByName(name: string): Promise<Category | null> {
+  async findByName(name: string): Promise<ICategory | null> {
     const category = await this.repository.findFirst({
       where: { name },
     });

@@ -1,4 +1,4 @@
-export interface Specification {
+export interface ISpecification {
   id: string;
   name: string;
   description: string;

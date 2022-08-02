@@ -1,6 +1,6 @@
 import { inject, injectable } from 'tsyringe';
 
-import { Car } from '@modules/cars/models/Car';
+import { ICar } from '@modules/cars/models/Car';
 import { ICarsRepository } from '@modules/cars/repositories/ICarsRepository';
 
 interface IRequest {
@@ -16,7 +16,7 @@ export class ListAvailableCarsUseCase {
     private carsRepository: ICarsRepository
   ) {}
 
-  async execute({ category_id, brand, name }: IRequest): Promise<Car[]> {
+  async execute({ category_id, brand, name }: IRequest): Promise<ICar[]> {
     const cars = await this.carsRepository.listAvailable(
       category_id,
       brand,

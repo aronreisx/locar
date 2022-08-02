@@ -1,9 +1,11 @@
 import { ICreateCarDTO } from '../dto/ICreateCarDTO';
-import { Car } from '../models/Car';
+import { ICar } from '../models/Car';
 
 export interface ICarsRepository {
-  create(data: ICreateCarDTO): Promise<Car>;
-  findByLicensePlate(license_plate: string): Promise<Car | null>;
+  create(data: ICreateCarDTO): Promise<ICar>;
+
+  findByLicensePlate(license_plate: string): Promise<ICar | null>;
+
   listAvailable(
     category_id?: string,
     brand?: string,
