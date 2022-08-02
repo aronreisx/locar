@@ -25,9 +25,10 @@ export class CategoriesRepositoryInMemory implements ICategoryRepository {
 
   async findByName(name: string): Promise<ICategory | null> {
     const category = this.repository.find((category) => {
-      category.name === name;
+      return category.name === name;
     });
-    if (!category) throw new AppError("Category doesn't exists", 400);
+
+    if (!category) return null;
     return category;
   }
 }
