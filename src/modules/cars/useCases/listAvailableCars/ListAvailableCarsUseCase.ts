@@ -4,9 +4,9 @@ import { ICar } from '@modules/cars/models/Car';
 import { ICarsRepository } from '@modules/cars/repositories/ICarsRepository';
 
 interface IRequest {
-  category_id: string;
-  brand: string;
-  name: string;
+  category_id?: string;
+  brand?: string;
+  name?: string;
 }
 
 @injectable()
