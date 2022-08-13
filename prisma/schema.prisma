@@ -22,7 +22,7 @@ model Specification {
   name        String
   description String
   created_at  DateTime             @default(now())
-  cars        SpecificationsCars[]
+  cars        CarsSpecifications[]
 
   @@map("specifications")
 }
@@ -52,12 +52,12 @@ model Car {
   category_id    String
   created_at     DateTime             @default(now())
   category       Category?            @relation(fields: [category_id], references: [id], onDelete: SetNull, onUpdate: SetNull)
-  specifications SpecificationsCars[]
+  specifications CarsSpecifications[]
 
   @@map("cars")
 }
 
-model SpecificationsCars {
+model CarsSpecifications {
   id               String         @id @default(uuid())
   specification_id String
   car_id           String
@@ -65,5 +65,5 @@ model SpecificationsCars {
   specification    Specification? @relation(fields: [specification_id], references: [id], onDelete: SetNull, onUpdate: SetNull)
   car              Car?           @relation(fields: [car_id], references: [id], onDelete: SetNull, onUpdate: SetNull)
 
-  @@map("specifications_cars")
+  @@map("cars_specifications")
 }
