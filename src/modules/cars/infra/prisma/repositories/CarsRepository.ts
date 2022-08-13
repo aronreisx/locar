@@ -1,5 +1,6 @@
 import { ICreateCarDTO } from '@modules/cars/dto/ICreateCarDTO';
 import { ICar } from '@modules/cars/models/Car';
+import { ICarSpecification } from '@modules/cars/models/CarSpecification';
 import { ICarsRepository } from '@modules/cars/repositories/ICarsRepository';
 import { prismaClient } from '@shared/infra/http/prisma/prismaClient';
 
@@ -50,5 +51,24 @@ export class CarsRepository implements ICarsRepository {
     });
 
     return availableCars;
+  }
+
+  async findById(id: string): Promise<ICar | null> {
+    const car = await this.repository.findFirst({
+      where: { id },
+    });
+    return car;
+  }
+
+  async findByIdWithSpecifications(
+    id: string
+  ): Promise<(ICar & { specifications: ICarSpecification[] }) | null> {
+    const car = await this.repository.findFirst({
+      where: { id },
+      include: {
+        specifications: true,
+      },
+    });
+    return car;
   }
 }

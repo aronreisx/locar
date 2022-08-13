@@ -1,3 +1,4 @@
+import { ISpecification } from '@modules/cars/models/Specification';
 import {
   ISpecificationsRepository,
   ICreateSpecificationsDTO,
@@ -21,5 +22,12 @@ export class SpecificationsRepository implements ISpecificationsRepository {
       where: { name },
     });
     return specification;
+  }
+
+  async findByIds(ids: string[]): Promise<ISpecification[]> {
+    const specifications = await this.repository.findMany({
+      where: { id: { in: ids } },
+    });
+    return specifications;
   }
 }
