@@ -1,10 +1,10 @@
-import { ISpecification } from '@modules/cars/models/Specification';
 import {
-  ISpecificationRepository,
+  ISpecificationsRepository,
   ICreateSpecificationsDTO,
-} from '../../../repositories/ISpecificationsRepository';
+} from '@modules/cars/repositories/ISpecificationsRepository';
+import { prismaClient } from '@shared/infra/http/prisma/prismaClient';
 
-export class SpecificationsRepository implements ISpecificationRepository {
+export class SpecificationsRepository implements ISpecificationsRepository {
   private repository = prismaClient.specification;
 
   async create({ name, description }: ICreateSpecificationsDTO): Promise<void> {

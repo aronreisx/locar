@@ -3,11 +3,11 @@ import { v4 as uuidv4 } from 'uuid';
 import { ICategory } from '@modules/cars/models/Category';
 
 import {
-  ICategoryRepository,
+  ICategoriesRepository,
   ICreateCategoryDTO,
 } from '../ICategoriesRepository';
 
-export class CategoriesRepositoryInMemory implements ICategoryRepository {
+export class CategoriesRepositoryInMemory implements ICategoriesRepository {
   repository: ICategory[] = [];
 
   async create({ name, description }: ICreateCategoryDTO): Promise<void> {

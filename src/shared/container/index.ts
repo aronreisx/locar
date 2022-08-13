@@ -4,17 +4,17 @@ import { UsersRepository } from '@modules/accounts/infra/prisma/repositories/Use
 import { IUsersRepository } from '@modules/accounts/repositories/IUsersRepository';
 import { CarsRepository } from '@modules/cars/infra/prisma/repositories/CarsRepository';
 import { CategoriesRepository } from '@modules/cars/infra/prisma/repositories/CategoriesRepository';
-import { SpecificationsRepository } from '@modules/cars/infra/prisma/repositories/SpecificationRepository';
+import { SpecificationsRepository } from '@modules/cars/infra/prisma/repositories/SpecificationsRepository';
 import { ICarsRepository } from '@modules/cars/repositories/ICarsRepository';
-import { ICategoryRepository } from '@modules/cars/repositories/ICategoriesRepository';
-import { ISpecificationRepository } from '@modules/cars/repositories/ISpecificationsRepository';
+import { ICategoriesRepository } from '@modules/cars/repositories/ICategoriesRepository';
+import { ISpecificationsRepository } from '@modules/cars/repositories/ISpecificationsRepository';
 
-container.registerSingleton<ICategoryRepository>(
+container.registerSingleton<ICategoriesRepository>(
   'CategoriesRepository',
   CategoriesRepository
 );
 
-container.registerSingleton<ISpecificationRepository>(
+container.registerSingleton<ISpecificationsRepository>(
   'SpecificationsRepository',
   SpecificationsRepository
 );

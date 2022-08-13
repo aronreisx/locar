@@ -10,5 +10,5 @@ export interface ICarsRepository {
     category_id?: string,
     brand?: string,
     name?: string
-  ): Promise<Car[]>;
+  ): Promise<ICar[]>;
 }
