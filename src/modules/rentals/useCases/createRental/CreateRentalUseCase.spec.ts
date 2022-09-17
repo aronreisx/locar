@@ -1,4 +1,5 @@
 import { AppError } from '@errors/AppErrors';
+import { ICar } from '@modules/cars/models/Car';
 import { CarsRepositoryInMemory } from '@modules/cars/repositories/in-memory/CarsRepositoryInMemory';
 import { RentalsRepositoryInMemory } from '@modules/rentals/repositories/in-memory/RentalsRepositoryInMemory';
 import { DayjsDateProvider } from '@shared/container/providers/DateProvider/implementations/DayjsDateProvider';
@@ -10,8 +11,10 @@ let rentalsRepositoryInMemory: RentalsRepositoryInMemory;
 let carsRepositoryInMemory: CarsRepositoryInMemory;
 let dayjsDateProvider: DayjsDateProvider;
 
+let car: ICar;
+
 describe('Create rental', () => {
-  beforeEach(() => {
+  beforeEach(async () => {
     rentalsRepositoryInMemory = new RentalsRepositoryInMemory();
     carsRepositoryInMemory = new CarsRepositoryInMemory();
     dayjsDateProvider = new DayjsDateProvider();
@@ -20,12 +23,22 @@ describe('Create rental', () => {
       carsRepositoryInMemory,
       dayjsDateProvider
     );
+
+    car = await carsRepositoryInMemory.create({
+      name: 'Gayleen',
+      description: 'erat id mauris vulputate elementum nullam varius nulla',
+      daily_rate: 33,
+      license_plate: 'WBALY1C57ED108938',
+      fine_amount: 34,
+      brand: 'Plymouth',
+      category_id: 'f0ddf096-2c72-4987-852b-9042da6770bb',
+    });
   });
 
   it('should be able to create a new rental', async () => {
     const rental = await createRentalUseCase.execute({
       user_id: '123',
-      car_id: '23131',
+      car_id: car.id,
       start_date: dayjsDateProvider.dateNow(),
       expected_return_date: dayjsDateProvider.dateTomorrow(),
     });
@@ -35,7 +48,7 @@ describe('Create rental', () => {
   it('should reject rentals if the user has another active rent', async () => {
     await createRentalUseCase.execute({
       user_id: '123',
-      car_id: '23131',
+      car_id: car.id,
       start_date: dayjsDateProvider.dateNow(),
       expected_return_date: dayjsDateProvider.dateTomorrow(),
     });
@@ -43,7 +56,7 @@ describe('Create rental', () => {
     expect(async () => {
       await createRentalUseCase.execute({
         user_id: '123',
-        car_id: '23131',
+        car_id: car.id,
         start_date: dayjsDateProvider.dateNow(),
         expected_return_date: dayjsDateProvider.dateTomorrow(),
       });
@@ -53,7 +66,7 @@ describe('Create rental', () => {
   it('should reject rentals for a rented car', async () => {
     await createRentalUseCase.execute({
       user_id: '1s1xa23',
-      car_id: '1fxg412',
+      car_id: car.id,
       start_date: dayjsDateProvider.dateNow(),
       expected_return_date: dayjsDateProvider.dateTomorrow(),
     });
@@ -61,7 +74,7 @@ describe('Create rental', () => {
     expect(async () => {
       await createRentalUseCase.execute({
         user_id: '1s1xa23',
-        car_id: '1fxg412',
+        car_id: car.id,
         start_date: dayjsDateProvider.dateNow(),
         expected_return_date: dayjsDateProvider.dateTomorrow(),
       });
@@ -72,7 +85,7 @@ describe('Create rental', () => {
     expect(async () => {
       await createRentalUseCase.execute({
         user_id: '1s1xa23',
-        car_id: '1fxg412',
+        car_id: car.id,
         start_date: dayjsDateProvider.dateNow(),
         expected_return_date: dayjsDateProvider.dateNow(),
       });
