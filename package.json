@@ -4,12 +4,19 @@
   "main": "src/server.js",
   "license": "MIT",
   "scripts": {
-    "dev": "ts-node-dev -r tsconfig-paths/register --inspect --transpile-only --ignore-watch node_modules --respawn src/shared/infra/http/server.ts",
-    "seed": "ts-node-dev prisma/seed/index.ts",
-    "migrate": "yarn prisma migrate dev",
+    "serve:dev": "yarn make:dev app-serve",
+    "db:seed:dev": "yarn make:test db-seed",
+    "db:seed:test": "yarn make:dev db-seed",
+    "db:migrate:dev": "yarn make:dev prisma-migrate",
+    "db:migrate:test": "yarn make:test prisma-migrate",
+    "db:reset:dev": "yarn make:dev prisma-reset",
+    "db:reset:test": "yarn make:test prisma-reset",
+    "run:app:test": "yarn make:test run-app-test",
+    "run:test:workflow": "yarn make:test run-test-workflow",
+    "make:dev": "make ENV=development",
+    "make:test": "make ENV=test",
     "lint": "eslint . --ext .ts",
-    "lint:fix": "npm run lint -- --fix",
-    "test": "jest"
+    "lint:fix": "yarn run lint -- --fix"
   },
   "devDependencies": {
     "@types/express": "^4.17.13",
@@ -40,6 +47,7 @@
     "argon2": "^0.28.5",
     "csv-parse": "^5.0.4",
     "dotenv": "^16.0.0",
+    "dotenv-cli": "^6.0.0",
     "dotenv-expand": "^8.0.3",
     "express": "^4.17.3",
     "express-async-errors": "^3.1.1",
