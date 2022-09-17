@@ -1,12 +1,12 @@
 import { IAddCarSpecificationDTO } from '@modules/cars/dto/IAddCarSpecificationDTO';
 import { ICarSpecification } from '@modules/cars/models/CarSpecification';
 import { ICarsSpecificationsRepository } from '@modules/cars/repositories/ICarsSpecificationsRepository';
-import { prismaClient } from '@shared/infra/http/prisma/prismaClient';
+import { databaseClient } from '@shared/infra/http/database';
 
 export class CarsSpecificationsRepository
   implements ICarsSpecificationsRepository
 {
-  private repository = prismaClient.carsSpecifications;
+  private repository = databaseClient.carsSpecifications;
 
   async createMany(data: IAddCarSpecificationDTO[]): Promise<void> {
     await this.repository.createMany({ data });

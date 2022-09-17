@@ -2,10 +2,10 @@ import { ICreateCarDTO } from '@modules/cars/dto/ICreateCarDTO';
 import { ICar } from '@modules/cars/models/Car';
 import { ICarSpecification } from '@modules/cars/models/CarSpecification';
 import { ICarsRepository } from '@modules/cars/repositories/ICarsRepository';
-import { prismaClient } from '@shared/infra/http/prisma/prismaClient';
+import { databaseClient } from '@shared/infra/http/database';
 
 export class CarsRepository implements ICarsRepository {
-  private repository = prismaClient.car;
+  private repository = databaseClient.car;
 
   async create({
     name,

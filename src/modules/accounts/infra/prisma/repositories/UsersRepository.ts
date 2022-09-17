@@ -1,11 +1,11 @@
 import { ICreateUserDTO } from '@modules/accounts/dto/ICreateUserDTO';
 import { IUser } from '@modules/accounts/models/User';
-import { prismaClient } from '@shared/infra/http/prisma/prismaClient';
+import { databaseClient } from '@shared/infra/http/database';
 
 import { IUsersRepository } from '../../../repositories/IUsersRepository';
 
 export class UsersRepository implements IUsersRepository {
-  private repository = prismaClient.user;
+  private repository = databaseClient.user;
 
   async create(data: ICreateUserDTO): Promise<void> {
     await this.repository.create({ data });
