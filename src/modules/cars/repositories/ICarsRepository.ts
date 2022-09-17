@@ -18,4 +18,6 @@ export interface ICarsRepository {
   findByIdWithSpecifications(
     id: string
   ): Promise<(ICar & { specifications: ICarSpecification[] }) | null>;
+
+  updateAvailability(id: string, availability: boolean): Promise<ICar>;
 }

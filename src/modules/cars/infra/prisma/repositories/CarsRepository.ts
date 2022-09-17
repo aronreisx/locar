@@ -27,7 +27,6 @@ export class CarsRepository implements ICarsRepository {
         category_id,
       },
     });
-
     return car;
   }
 
@@ -49,7 +48,6 @@ export class CarsRepository implements ICarsRepository {
         AND: [{ category_id }, { brand }, { name }],
       },
     });
-
     return availableCars;
   }
 
@@ -70,5 +68,17 @@ export class CarsRepository implements ICarsRepository {
       },
     });
     return car;
+  }
+
+  async updateAvailability(id: string, availability: boolean): Promise<ICar> {
+    const updatedCar = await this.repository.update({
+      where: {
+        id,
+      },
+      data: {
+        available: availability,
+      },
+    });
+    return updatedCar;
   }
 }

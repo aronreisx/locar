@@ -6,5 +6,5 @@ export interface IUser {
   driver_license: string;
   avatar?: string;
   admin: boolean;
-  created_at: Date;
+  created_at?: Date;
 }
