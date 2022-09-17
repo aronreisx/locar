@@ -1,5 +1,5 @@
 import { ICategory } from '@modules/cars/models/Category';
-import { prismaClient } from '@shared/infra/http/prisma/prismaClient';
+import { databaseClient } from '@shared/infra/http/database';
 
 import {
   ICategoriesRepository,
@@ -7,7 +7,7 @@ import {
 } from '../../../repositories/ICategoriesRepository';
 
 export class CategoriesRepository implements ICategoriesRepository {
-  private repository = prismaClient.category;
+  private repository = databaseClient.category;
 
   async create({ name, description }: ICreateCategoryDTO): Promise<void> {
     await this.repository.create({
