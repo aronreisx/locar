@@ -79,5 +79,5 @@ app-serve:
 run-test-workflow:
 	yarn make:test run-database && \
 	yarn make:test prisma-migrate && \
-	yarn make:test run-app-test && \
+	yarn make:test run-app-test; \
 	yarn make:test remove-database
