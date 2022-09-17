@@ -8,6 +8,12 @@ interface IImportCategory {
   name: string;
   description: string;
 }
+
+type File = Partial<Express.Multer.File> & {
+  filename: string;
+  path: string;
+};
+
 @injectable()
 export class ImportCategoryUseCase {
   constructor(
@@ -15,7 +21,7 @@ export class ImportCategoryUseCase {
     private categoriesRepository: ICategoriesRepository
   ) {}
 
-  loadCategories(file: Express.Multer.File): Promise<IImportCategory[]> {
+  loadCategories(file: File): Promise<IImportCategory[]> {
     return new Promise((resolve, reject) => {
       const stream = fs.createReadStream(file.path);
       const categories: IImportCategory[] = [];
@@ -42,7 +48,7 @@ export class ImportCategoryUseCase {
     });
   }
 
-  async execute(file: Express.Multer.File): Promise<void> {
+  async execute(file: File): Promise<void> {
     const categories = await this.loadCategories(file);
 
     categories.map(async (category) => {

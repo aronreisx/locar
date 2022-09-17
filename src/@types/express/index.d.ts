@@ -5,6 +5,7 @@ declare namespace Express {
     };
     file: {
       filename: string;
+      path: string;
     }
   }
 }
