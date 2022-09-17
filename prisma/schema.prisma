@@ -36,6 +36,7 @@ model User {
   avatar         String   @default("")
   admin          Boolean  @default(false)
   created_at     DateTime @default(now())
+  rental         Rental[]
 
   @@map("users")
 }
@@ -54,6 +55,7 @@ model Car {
   category       Category?            @relation(fields: [category_id], references: [id], onDelete: SetNull, onUpdate: SetNull)
   specifications CarsSpecifications[]
   images         CarImages[]
+  rental         Rental[]
 
   @@map("cars")
 }
@@ -78,4 +80,20 @@ model CarImages {
   car        Car?     @relation(fields: [car_id], references: [id], onDelete: SetNull, onUpdate: SetNull)
 
   @@map("car_images")
+}
+
+model Rental {
+  id                   String   @id @default(uuid())
+  car_id               String
+  user_id              String
+  start_date           DateTime
+  end_date             DateTime?
+  expected_return_date DateTime
+  total                Int?
+  created_at           DateTime @default(now())
+  updated_at           DateTime @default(now())
+  car                  Car?     @relation(fields: [car_id], references: [id], onDelete: SetNull, onUpdate: SetNull)
+  user                 User?    @relation(fields: [user_id], references: [id], onDelete: SetNull, onUpdate: SetNull)
+
+  @@map("rentals")
 }
