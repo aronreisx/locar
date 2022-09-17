@@ -4,8 +4,8 @@ import { container } from 'tsyringe';
 import { ImportCategoryUseCase } from './ImportCategoryUseCase';
 
 export class ImportCategoryController {
-  async handle(resquest: Request, response: Response) {
-    const { file } = resquest;
+  async handle(request: Request, response: Response) {
+    const { file } = request;
 
     if (!file) {
       return response.status(400).json({ message: 'File not found' });
