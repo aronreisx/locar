@@ -3,11 +3,8 @@ import { v4 as uuidv4 } from 'uuid';
 
 import { IUser } from '@modules/accounts/models/User';
 import app from '@shared/infra/http/app';
-import { DatabaseClient, IDatabaseClient } from '@shared/infra/http/database';
-import { DatabaseUtils } from '@utils/database';
-
-let databaseClient: IDatabaseClient;
-let databaseUtils: DatabaseUtils;
+import { databaseClient } from '@shared/infra/http/database';
+import { createUser } from '@utils/database';
 
 const adminUser: IUser = {
   id: uuidv4(),
@@ -23,9 +20,7 @@ describe('Create Category Controller', () => {
   jest.setTimeout(30000);
 
   beforeAll(async () => {
-    databaseClient = new DatabaseClient();
-    databaseUtils = new DatabaseUtils(databaseClient);
-    await databaseUtils.createUser(adminUser);
+    await createUser(databaseClient, adminUser);
   });
 
   afterAll(async () => {
@@ -33,7 +28,7 @@ describe('Create Category Controller', () => {
       databaseClient.user.deleteMany(),
       databaseClient.category.deleteMany(),
     ]);
-    await databaseUtils.disconnect();
+    await databaseClient.$disconnect();
   });
 
   it('should be able to create a new category', async () => {
