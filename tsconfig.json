@@ -20,6 +20,9 @@
       ],
       "@utils/*": [
         "utils/*"
+      ],
+      "@prismaFolder/*": [
+        "../prisma/*"
       ]
     },
     "resolveJsonModule": true,
