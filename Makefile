@@ -5,12 +5,12 @@ include $(ENV_PATH)
 COMPOSE_BASE_COMMAND=docker-compose --env-file $(ENV_PATH)
 DOTENV_COMMAND=dotenv -e .env.$(ENV)
 
-.PHONY: up
-up:
+.PHONY: compose-up
+compose-up:
 	$(COMPOSE_BASE_COMMAND) up -d
 
-.PHONY: down
-down:
+.PHONY: compose-down
+compose-down:
 	$(COMPOSE_BASE_COMMAND) down
 
 .PHONY: run-database
@@ -60,14 +60,23 @@ prisma-reset:
 prisma-migrate:
 	npx dotenv -e .env.$(ENV) -- yarn prisma migrate deploy
 
+.PHONY: prisma-migrate-dev
+prisma-migrate-dev:
+	npx dotenv -e .env.$(ENV) -- yarn prisma migrate dev
+
 .PHONY: run-app-test
 run-app-test:
 	npx dotenv -e .env.$(ENV) -- jest
 
-.PHONY: db-seed
-db-seed:
+.PHONY: db-seed-all
+db-seed-all:
 	npx dotenv -e .env.$(ENV) -- ts-node-dev -r tsconfig-paths/register \
 	prisma/seed/index.ts
+
+.PHONY: db-seed-users
+db-seed-users:
+	npx dotenv -e .env.$(ENV) -- ts-node-dev -r tsconfig-paths/register \
+	prisma/seed/users/index.ts
 
 .PHONY: app-serve
 app-serve:
@@ -79,5 +88,13 @@ app-serve:
 run-test-workflow:
 	yarn make:test run-database && \
 	yarn make:test prisma-migrate && \
+	yarn make:test db-seed-all && \
 	yarn make:test run-app-test; \
 	yarn make:test remove-database
+
+.PHONY: serve-seed-dev
+serve-seed-dev:
+	yarn make:dev compose-up && \
+	yarn make:dev prisma-migrate && \
+	yarn make:dev db-seed-all && \
+	yarn make:dev app-serve
