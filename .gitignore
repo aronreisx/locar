@@ -1,6 +1,8 @@
 node_modules
 dist
 data
+tmp/*
+!tmp/.gitkeep
 !prisma/seed/**/data
 .vscode/*
 !.vscode/launch.json
