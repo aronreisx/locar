@@ -17,7 +17,8 @@
     "make:dev": "make ENV=development",
     "make:test": "make ENV=test",
     "lint": "eslint . --ext .ts",
-    "lint:fix": "yarn run lint -- --fix"
+    "lint:fix": "yarn run lint -- --fix",
+    "build": "babel src --extensions \".ts\" --out-dir dist --copy-files"
   },
   "devDependencies": {
     "@types/express": "^4.17.13",
