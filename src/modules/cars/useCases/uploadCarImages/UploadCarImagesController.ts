@@ -19,7 +19,6 @@ export class UploadCarImagesController {
     await uploadCarImageUseCase.execute({
       car_id: id,
       images_name: fileNames,
-      url: '', // TODO: implement bucket upload
     });
 
     return response.status(201).send();
