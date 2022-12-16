@@ -1,34 +1,57 @@
-import * as argon2 from 'argon2';
+import users from '@prismaFolder/seed/users/data/users.json';
+import { databaseClient } from '@shared/infra/http/database';
 
-import { IUser } from '@modules/accounts/models/User';
-import { IDatabaseClient } from '@shared/infra/http/database';
-
-export const createUser = async (
-  databaseClient: IDatabaseClient,
-  data: IUser
-): Promise<void> => {
-  const hashedPassword = await argon2.hash(data.password);
-  try {
+export const getPublicTables = async (): Promise<string[]> => {
+  const tables: { table_name: string }[] =
     await databaseClient.$queryRawUnsafe(`
-      INSERT INTO users (
-        id,
-        name,
-        email,
-        password,
-        driver_license,
-        avatar,
-        admin
-      ) VALUES (
-        '${data.id}',
-        '${data.name}',
-        '${data.email}',
-        '${hashedPassword}',
-        '${data.driver_license}',
-        '${data.avatar}',
-        '${data.admin}'
-      );
-    `);
+    SELECT table_name
+    FROM information_schema.tables
+    WHERE table_type='BASE TABLE'
+    AND table_schema='public';
+  `);
+
+  const tablesWithoutPrismaMigrations = tables
+    .filter((table) => {
+      return table.table_name !== '_prisma_migrations';
+    })
+    .map((table) => {
+      return table.table_name;
+    });
+
+  return tablesWithoutPrismaMigrations;
+};
+
+export const truncateTables = async (tableNames?: string[]): Promise<void> => {
+  if (process.env.NODE_ENV === 'production') {
+    console.log('Truncate tables is not allowed in production');
+    return;
+  }
+
+  const allTables = await getPublicTables();
+  const tables = tableNames ?? allTables;
+
+  try {
+    await databaseClient.$transaction([
+      ...tables.map((table) =>
+        databaseClient.$executeRawUnsafe(
+          `TRUNCATE "public"."${table}" CASCADE;`
+        )
+      ),
+    ]);
   } catch (error) {
     console.log(error);
   }
+};
+
+export const getSeededAdminUser = (): object => {
+  const admin = users.find((user) => {
+    return user.admin;
+  });
+
+  const adminCredentials = {
+    email: admin?.email,
+    password: admin?.password,
+  };
+
+  return adminCredentials;
 };
