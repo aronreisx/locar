@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response } from 'express';
 import { verify } from 'jsonwebtoken';
 
+import auth from '@config/auth';
 import { AppError } from '@errors/AppErrors';
-import { UsersRepository } from '@modules/accounts/infra/prisma/repositories/UsersRepository';
 
 interface IPayload {
   iat: number;
@@ -24,20 +24,10 @@ export async function ensureAuthentication(
   const [, token] = authHeader.split(' ');
 
   try {
-    const { sub: userId } = verify(
-      token,
-      'a5a28cfe2786537d28d4f57d4a15fe5813a973d3d6f9b9186033b8df50fac56b'
-    ) as IPayload;
-
-    const usersRepository = new UsersRepository();
-    const user = await usersRepository.findById(userId);
-
-    if (!user) {
-      throw new AppError('User does not exists', 401);
-    }
+    const { sub: user_id } = verify(token, auth.token_secret) as IPayload;
 
     request.user = {
-      id: userId,
+      id: user_id,
     };
 
     next();
