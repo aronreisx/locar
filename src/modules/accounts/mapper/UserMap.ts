@@ -9,14 +9,14 @@ export class UserMap {
     avatar,
     driver_license,
   }: IUser): IUserResponseDTO {
-    const getAvatarUrl = (): string => {
-      switch (process.env.STORAGE_DISK) {
+    const getAvatarUrl = (storageType?: string): string => {
+      switch (storageType) {
         case 'local':
           return `${process.env.SERVER_URL}/avatar/${avatar}`;
         case 's3':
           return `${process.env.AWS_BUCKET_URL}/avatar/${avatar}`;
         default:
-          return `${process.env.AWS_BUCKET_URL}/avatar/image_not_exists`;
+          return `${process.env.AWS_BUCKET_URL}/avatar/image-does-not-exists`;
       }
     };
 
@@ -25,7 +25,7 @@ export class UserMap {
       name,
       id,
       avatar,
-      avatar_url: getAvatarUrl(),
+      avatar_url: getAvatarUrl(process.env.STORAGE_DISK),
       driver_license,
     };
   }

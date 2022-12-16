@@ -33,7 +33,7 @@ export class SESMailProvider implements IMailProvider {
 
     await this.client.sendMail({
       to,
-      from: 'Locar <support@locar.com>', // TODO: Domain/email should be valid
+      from: `${process.env.APP_NAME} <support@${process.env.APP_DOMAIN}>`,
       subject,
       html: templateHTML,
     });

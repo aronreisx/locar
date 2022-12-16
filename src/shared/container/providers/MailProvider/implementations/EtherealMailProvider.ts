@@ -39,7 +39,7 @@ export class EtherealMailProvider implements IMailProvider {
 
     const message = await this.client.sendMail({
       to,
-      from: 'Locar <noreply@locar.co.uk>',
+      from: `${process.env.APP_NAME} <noreply@${process.env.APP_DOMAIN}>`,
       subject,
       html: templateHTML,
     });

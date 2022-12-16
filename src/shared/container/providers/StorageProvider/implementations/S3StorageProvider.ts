@@ -23,7 +23,7 @@ export class S3StorageProvider implements IStorageProvider {
 
     const ContentType = mime.getType(originalName) as string;
 
-    const Bucket = `${process.env.AWS_BUCKET}/${folder}`;
+    const Bucket = `${process.env.AWS_BUCKET_NAME}/${folder}`;
 
     await this.client
       .putObject({
@@ -43,7 +43,7 @@ export class S3StorageProvider implements IStorageProvider {
   async delete(file: string, folder: string): Promise<void> {
     await this.client
       .deleteObject({
-        Bucket: `${process.env.AWS_BUCKET}/${folder}`,
+        Bucket: `${process.env.AWS_BUCKET_NAME}/${folder}`,
         Key: file,
       })
       .promise();
