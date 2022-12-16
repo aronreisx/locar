@@ -4,7 +4,7 @@ export interface IUser {
   email: string;
   password: string;
   driver_license: string;
-  avatar?: string;
+  avatar: string;
   admin: boolean;
   created_at?: Date;
 }
