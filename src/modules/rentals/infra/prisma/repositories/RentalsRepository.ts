@@ -66,4 +66,14 @@ export class RentalsRepository implements IRentalsRepository {
     });
     return rental;
   }
+
+  async findByUser(user_id: string): Promise<IRental[]> {
+    const userRentals = await this.rentals.findMany({
+      where: { user_id },
+      include: {
+        car: true,
+      },
+    });
+    return userRentals;
+  }
 }

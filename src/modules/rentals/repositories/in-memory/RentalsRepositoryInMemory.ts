@@ -57,4 +57,9 @@ export class RentalsRepositoryInMemory implements IRentalsRepository {
     const rentalIndex = this.rentals.findIndex((rental) => rental.id === id);
     return this.rentals[rentalIndex] || null;
   }
+
+  async findByUser(user_id: string): Promise<IRental[]> {
+    const rentals = this.rentals.filter((rental) => rental.user_id === user_id);
+    return rentals;
+  }
 }
