@@ -22,6 +22,7 @@ export class UsersRepositoryInMemory implements IUsersRepository {
       driver_license,
       admin: false,
       created_at: new Date(),
+      avatar: ''
     };
 
     this.repository.push(user);
