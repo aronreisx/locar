@@ -1,59 +1,45 @@
 import request from 'supertest';
-import { v4 as uuidv4 } from 'uuid';
 
-import { IUser } from '@modules/accounts/models/User';
 import app from '@shared/infra/http/app';
 import { databaseClient } from '@shared/infra/http/database';
-import { createUser } from '@utils/database';
+import { truncateTables, getSeededAdminUser } from '@utils/database';
 
-const adminUser: IUser = {
-  id: uuidv4(),
-  name: 'Jose Waldo',
-  email: 'jose.waldo@contact.co.uk',
-  password: '51312212',
-  driver_license: 'HGX142WB',
-  avatar: '',
-  admin: true,
-};
-
-describe('Create Category Controller', () => {
+describe('List Categories Controller', () => {
   jest.setTimeout(30000);
 
+  let Authorization: object;
+
   beforeAll(async () => {
-    await createUser(databaseClient, adminUser);
+    const authentication = await request(app)
+      .post('/sessions')
+      .send(getSeededAdminUser());
+
+    Authorization = {
+      Authorization: `Bearer ${authentication.body.refresh_token}`,
+    };
   });
 
   afterAll(async () => {
-    await databaseClient.$transaction([
-      databaseClient.user.deleteMany(),
-      databaseClient.category.deleteMany(),
-    ]);
+    await truncateTables(['categories']);
     await databaseClient.$disconnect();
   });
 
   it('should be able to list all categories', async () => {
-    const authentication = await request(app).post('/sessions').send({
-      email: adminUser.email,
-      password: adminUser.password,
+    const previousCategoriesList = await request(app).get('/categories');
+
+    await databaseClient.category.create({
+      data: {
+        name: 'Ipsum category',
+        description: 'Ipsum category description',
+      },
     });
 
-    const { token } = authentication.body;
+    const currentCategoryList = await request(app).get('/categories');
 
-    await request(app)
-      .post('/categories')
-      .send({
-        name: 'Supertest category',
-        description: 'Supertest category description',
-      })
-      .set({ Authorization: `Bearer ${token}` });
-
-    const response = await request(app)
-      .get('/categories')
-      .set({ Authorization: `Bearer ${token}` });
-
-    expect(response.status).toBe(200);
-    expect(response.body.length).toBe(1);
-    expect(response.body[0]).toHaveProperty('id');
-    expect(response.body[0].name).toEqual('Supertest category');
+    expect(currentCategoryList.status).toBe(200);
+    expect(currentCategoryList.body[0]).toHaveProperty('id');
+    expect(currentCategoryList.body.length).toBeGreaterThan(
+      previousCategoriesList.body.length
+    );
   });
 });
