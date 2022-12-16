@@ -3,7 +3,9 @@ import { container } from 'tsyringe';
 import './providers';
 
 import { UsersRepository } from '@modules/accounts/infra/prisma/repositories/UsersRepository';
+import { UserTokensRepository } from '@modules/accounts/infra/prisma/repositories/UserTokensRepository';
 import { IUsersRepository } from '@modules/accounts/repositories/IUsersRepository';
+import { IUserTokensRepository } from '@modules/accounts/repositories/IUserTokensRepository';
 import { CarImagesRepository } from '@modules/cars/infra/prisma/repositories/CarImagesRepository';
 import { CarsRepository } from '@modules/cars/infra/prisma/repositories/CarsRepository';
 import { CarsSpecificationsRepository } from '@modules/cars/infra/prisma/repositories/CarsSpecificationsRepository';
@@ -47,4 +49,9 @@ container.registerSingleton<ICarImagesRepository>(
 container.registerSingleton<IRentalsRepository>(
   'RentalsRepository',
   RentalsRepository
+);
+
+container.registerSingleton<IUserTokensRepository>(
+  'UserTokensRepository',
+  UserTokensRepository
 );
