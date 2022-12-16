@@ -9,13 +9,14 @@ import {
 export class CategoriesRepository implements ICategoriesRepository {
   private repository = databaseClient.category;
 
-  async create({ name, description }: ICreateCategoryDTO): Promise<void> {
-    await this.repository.create({
+  async create({ name, description }: ICreateCategoryDTO): Promise<ICategory> {
+    const category = await this.repository.create({
       data: {
         name,
         description,
       },
     });
+    return category;
   }
 
   async list(): Promise<ICategory[]> {
