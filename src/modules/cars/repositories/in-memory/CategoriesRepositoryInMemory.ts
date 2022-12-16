@@ -10,13 +10,15 @@ import {
 export class CategoriesRepositoryInMemory implements ICategoriesRepository {
   repository: ICategory[] = [];
 
-  async create({ name, description }: ICreateCategoryDTO): Promise<void> {
-    this.repository.push({
+  async create({ name, description }: ICreateCategoryDTO): Promise<ICategory> {
+    const category = {
       id: uuidv4(),
       name,
       description,
       created_at: new Date(),
-    });
+    };
+    this.repository.push(category);
+    return category;
   }
 
   async list(): Promise<ICategory[]> {
