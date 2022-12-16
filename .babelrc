@@ -15,24 +15,12 @@
       "module-resolver",
       {
         "alias": {
-          "@modules": [
-            "modules"
-          ],
-          "@config": [
-            "config"
-          ],
-          "@shared": [
-            "shared"
-          ],
-          "@errors": [
-            "errors"
-          ],
-          "@utils": [
-            "utils"
-          ],
-          "@prismaFolder": [
-            "../prisma"
-          ]
+          "@modules": "./src/modules",
+          "@config": "./src/config",
+          "@shared": "./src/shared",
+          "@errors": "./src/errors",
+          "@utils": "./src/utils",
+          "@prismaFolder": "./prisma"
         }
       }
     ],
