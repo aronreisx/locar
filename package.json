@@ -4,7 +4,8 @@
   "main": "src/server.js",
   "license": "MIT",
   "scripts": {
-    "app:serve:dev": "yarn make:dev app-serve",
+    "app:serve:dev": "yarn make:dev app-serve-ts",
+    "app:serve:prod": "yarn make:prod app-serve-js",
     "db:seed:dev": "yarn make:test db-seed",
     "db:seed:test": "yarn make:dev db-seed",
     "db:migrate:dev": "yarn make:dev prisma-migrate",
@@ -14,11 +15,12 @@
     "run:app:test": "yarn make:test run-app-test",
     "run:test:workflow": "yarn make:test run-test-workflow",
     "serve:seed:dev": "yarn make:dev serve-seed-dev",
+    "make:prod": "make ENV=production",
     "make:dev": "make ENV=development",
     "make:test": "make ENV=test",
-    "lint": "eslint . --ext .ts",
-    "lint:fix": "yarn run lint -- --fix",
-    "build": "babel src --extensions \".ts\" --out-dir dist --copy-files"
+    "lint": "make lint",
+    "lint:fix": "make lint-fix",
+    "build": "make build"
   },
   "devDependencies": {
     "@babel/cli": "^7.19.3",
