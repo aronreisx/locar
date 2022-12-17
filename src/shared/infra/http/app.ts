@@ -11,10 +11,13 @@ import upload from '@config/upload';
 import { errorHandler } from '@shared/infra/http/middlewares/errorHandler';
 import { router } from '@shared/infra/http/routes';
 import cors from 'cors';
+import rateLimiter from './middlewares/rateLimiter';
 
 dotenvExpander.expand(dotenv.config());
 
 const app = express();
+
+app.use(rateLimiter);
 
 app.use(express.json());
 
