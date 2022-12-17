@@ -1,9 +1,9 @@
-ENV_PATH=.env.$(ENV)
+ENV__FILEPATH=.env.$(ENV)
 
-include $(ENV_PATH)
+include $(ENV_FILE_PATH)
 
-COMPOSE_BASE_COMMAND=docker-compose --env-file $(ENV_PATH)
-DOTENV_COMMAND=dotenv -e .env.$(ENV)
+COMPOSE_BASE_COMMAND=docker-compose --env-file $(ENV_FILE_PATH)
+DOTENV_COMMAND=node node_modules/.bin/dotenv -e $(ENV_FILE_PATH)
 
 .PHONY: compose-up
 compose-up:
@@ -40,8 +40,8 @@ logs-database:
 restart-database:
 	docker restart $(DB_CONTAINER_NAME)
 
-.PHONY: terminal-database
-terminal-database:
+.PHONY: database-bash
+database-bash:
 	docker exec -it $(DB_CONTAINER_NAME) bash
 
 .PHONY: remove-database
@@ -54,35 +54,51 @@ remove-modules:
 
 .PHONY: prisma-reset
 prisma-reset:
-	npx dotenv -e .env.$(ENV) -- npx prisma migrate reset  --force --skip-seed
+	$(DOTENV_COMMAND) -- npx prisma migrate reset  --force --skip-seed
 
 .PHONY: prisma-migrate
 prisma-migrate:
-	npx dotenv -e .env.$(ENV) -- yarn prisma migrate deploy
+	$(DOTENV_COMMAND) -- yarn prisma migrate deploy
 
 .PHONY: prisma-migrate-dev
 prisma-migrate-dev:
-	npx dotenv -e .env.$(ENV) -- yarn prisma migrate dev
+	$(DOTENV_COMMAND) -- yarn prisma migrate dev
 
 .PHONY: run-app-test
 run-app-test:
-	npx dotenv -e .env.$(ENV) -- jest
+	$(DOTENV_COMMAND) -- jest
 
 .PHONY: db-seed-all
 db-seed-all:
-	npx dotenv -e .env.$(ENV) -- ts-node-dev -r tsconfig-paths/register \
+	$(DOTENV_COMMAND) -- ts-node-dev -r tsconfig-paths/register \
 	prisma/seed/index.ts
 
 .PHONY: db-seed-users
 db-seed-users:
-	npx dotenv -e .env.$(ENV) -- ts-node-dev -r tsconfig-paths/register \
+	$(DOTENV_COMMAND) -- ts-node-dev -r tsconfig-paths/register \
 	prisma/seed/users/index.ts
 
-.PHONY: app-serve
-app-serve:
-	npx dotenv -e .env.$(ENV) -- ts-node-dev -r tsconfig-paths/register \
+.PHONY: app-serve-ts
+app-serve-ts:
+	$(DOTENV_COMMAND) -- ts-node-dev -r tsconfig-paths/register \
 	--inspect --transpile-only --ignore-watch node_modules --respawn \
 	src/shared/infra/http/server.ts
+
+.PHONY: app-serve-js
+app-serve-js:
+	$(DOTENV_COMMAND) -- node dist/shared/infra/http/server.js
+
+.PHONY: build
+build:
+	node_modules/.bin/babel src --extensions \".ts\" --out-dir dist --copy-files
+
+.PHONY: lint
+lint:
+	node_modules/.bin/eslint . --ext .ts
+
+.PHONY: lint-fix
+lint-fix:
+	eslint . --ext .ts --fix
 
 .PHONY: run-test-workflow
 run-test-workflow:
